@@ -11,8 +11,8 @@ class LetterInformation(Enum):
 
 class WordleFondamentiAI():
 
-    def __init__(self):
-        words = WordList().get_list_copy()
+    def __init__(self, data_file):
+        words = WordList(data_file).get_list_copy()
         self.words = words  # list of all legal 5 letter words
 
     def guess(self, guess_history):
@@ -30,13 +30,16 @@ class WordleFondamentiAI():
     def get_author(self):
         return "simone e sofia"
 
+    def get_name(self):
+        return "letter popularity ai"
+
 
 # restituisce la popolarità delle lettere a partire da una lista in ingresso
 def get_dict_letters_percentages(words):
     letter_popularity = dict.fromkeys(list(string.ascii_lowercase), 0)
     for word in words:
         for letter in word:
-            letter_popularity[letter] += 1  # each occurance of the letter is counted
+            letter_popularity[letter] += 1
     return letter_popularity
 
 

@@ -19,12 +19,20 @@ for file in data.files:
     print(data[file])
 """
 
-from WordleFondamentiAI import *
-from WordList import *
+combined_wordlist_list=[]
+with open('data/combined_wordlist.txt', encoding="utf8") as file:
+    combined_wordlist = file.readlines()
+    combined_wordlist = [word.rstrip() for word in combined_wordlist]
+    combined_wordlist = [w for w in combined_wordlist if len(w) == 5]
+    combined_wordlist_list = list(dict.fromkeys(combined_wordlist))  # remove duplicates
 
-wordList = WordList()
-words = wordList.get_list_copy()
-ai = WordleFondamentiAI(words)
-ai.guess(words)
 
+common_words_5_letters_list=[]
+with open('data/common_words_5_letters.txt', encoding="utf8") as file:
+    common_words_5_letters = file.readlines()
+    common_words_5_letters = [word.rstrip() for word in common_words_5_letters]
+    common_words_5_letters = [w for w in common_words_5_letters if len(w) == 5]
+    common_words_5_letters_list = list(dict.fromkeys(common_words_5_letters))  # remove duplicates
 
+not_present_list = [word for word in common_words_5_letters_list if word not in combined_wordlist_list]
+print(len(not_present_list))

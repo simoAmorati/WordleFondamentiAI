@@ -10,9 +10,8 @@ def play(competitor, word):
     success = False
     guess_history = []
 
-    for i in range(6):  # max 5 ipotesi
+    for i in range(5):  # max 5 ipotesi
         guess = competitor.guess(guess_history)
-
         guess_result = []
         for c in range(5):
             if guess[c] not in word:
@@ -21,6 +20,7 @@ def play(competitor, word):
                 guess_result.append(LetterInformation.CORRECT)
             else:
                 guess_result.append(LetterInformation.PRESENT)
+
         guess_history.append((guess, guess_result))
         guesses.append(guess)
 
@@ -54,11 +54,11 @@ def main(competitors, rounds):
         round_words.append(correct_word)
         c = 0
         for competitor in competitors:
-            print("\rRound", i + 1, "/", rounds, "word =", correct_word, "competitior", c + 1, "/", len(competitors),
-                  "time", current_time, "/", current_time * rounds / (i + 1), end='')
+            print("\rRound", i + 1, "/", rounds, "- word =", correct_word, "- competitior:", competitor.get_name(), "(", c + 1,  "di", len(competitors), ")",
+                  "- time", current_time, "/", current_time * rounds / (i + 1), end='')
             competitor_start = time.time()
             success, round_guesses = play(competitor, correct_word)
-            round_points = len(round_guesses) if success else 10
+            round_points = len(round_guesses) if success else -1
             result[competitor] += round_points
             guesses[competitor].append(round_guesses)
             points[competitor].append(round_points)
@@ -76,6 +76,6 @@ def main(competitors, rounds):
 
 if __name__ == "__main__":
     competitors = []
-    letterPopularityAI = WordleFondamentiAI()
+    letterPopularityAI = WordleFondamentiAI('data/combined_wordlist.txt')
     competitors.append(letterPopularityAI)
     main(competitors, 20)
