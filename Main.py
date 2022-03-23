@@ -10,7 +10,7 @@ def play(competitor, word):
     success = False
     guess_history = []
 
-    for i in range(5):  # max 5 ipotesi
+    for i in range(6):  # max 6 ipotesi
         guess = competitor.guess(guess_history)
         guess_result = []
         for c in range(5):
@@ -36,6 +36,7 @@ def main(competitors, rounds):
     guesses = {}
     points = {}
     round_words = []
+    fail_total = {}
 
     for competitor in competitors:
         result[competitor] = 0
@@ -48,6 +49,7 @@ def main(competitors, rounds):
 
     start = time.time()
     competitor_times = np.zeros(len(competitors))
+    fail_count = 0
     for i in range(rounds):
         correct_word = random.choice(fight_words)
         current_time = time.time() - start
@@ -64,6 +66,10 @@ def main(competitors, rounds):
             points[competitor].append(round_points)
             if success:
                 success_total[competitor] += 1
+            else:
+                fail_count += 1
+                fail_total[fail_count] = (correct_word, round_guesses[len(round_guesses) - 1])
+
             competitor_times[c] += time.time() - competitor_start
             c += 1
 
@@ -71,6 +77,7 @@ def main(competitors, rounds):
     print("Words: ", round_words)
     print("Guesses: ", guesses)
     print("Points per round: ", points)
+    print("correct word - fail word: ", fail_total)
     print("")
 
 
@@ -78,4 +85,4 @@ if __name__ == "__main__":
     competitors = []
     letterPopularityAI = WordleFondamentiAI('data/combined_wordlist.txt')
     competitors.append(letterPopularityAI)
-    main(competitors, 20)
+    main(competitors, 100)
