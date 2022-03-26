@@ -78,6 +78,7 @@ def main(competitors, rounds):
     print("Guesses: ", guesses)
     print("Points per round: ", points)
     print("correct word - fail word: ", fail_total)
+    print("n° fail word: ", len(fail_total))
     print("")
 
 
@@ -85,4 +86,4 @@ if __name__ == "__main__":
     competitors = []
     letterPopularityAI = WordleFondamentiAI('data/combined_wordlist.txt')
     competitors.append(letterPopularityAI)
-    main(competitors, 100)
+    main(competitors, 1000)
