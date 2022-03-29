@@ -46,7 +46,14 @@ class QuordleTester:
             if np.array_equal(success, [True, True, True, True]):
                 success_total += 1
             else:
-                mistakes.append(word)
+                index_list = []
+                cont = 0
+                for value in success:
+                    if value == False:
+                        index_list.append(cont)
+                    cont += 1
+                for index in index_list:
+                    mistakes.append(word[index])
 
             competitor_time += time.time() - current_time
 
@@ -73,6 +80,7 @@ class QuordleTester:
             guess = competitor.guess(guess_history)
 
             if not self.guess_is_legal(guess):
+                print("guess ->", guess)
                 print("Competitor ", competitor.__class__.__name__, " is cheating")
                 print("Competition aborted.")
                 quit()
@@ -98,7 +106,10 @@ class QuordleTester:
                     guess_history.remove((guess, guess_result))
                     guess_result[g] = []
                     guess_history.append((guess, guess_result))
-                    break
+
+            if np.array_equal(check_success, [True, True, True, True]):
+                break
+
 
         return check_success, answered_guesses
 
@@ -114,7 +125,7 @@ def main():
     np.set_printoptions(suppress=True)
 
     competition = QuordleTester(wordlist_filename="data/combined_wordlist.txt")
-    competition.fight(rounds=1, solution_wordlist_filename="data/shuffled_real_wordles.txt")
+    competition.fight(rounds=100, solution_wordlist_filename="data/shuffled_real_wordles.txt")
 
 
 if __name__ == "__main__":
