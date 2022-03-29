@@ -10,6 +10,7 @@ MAX_GUESSES = 9
 WORD_LENGTH = 5
 GAMES = 4
 
+
 class QuordleTester:
 
     def __init__(self, wordlist_filename="data/combined_wordlist.txt"):
@@ -49,7 +50,7 @@ class QuordleTester:
                 index_list = []
                 cont = 0
                 for value in success:
-                    if value == False:
+                    if not value:
                         index_list.append(cont)
                     cont += 1
                 for index in index_list:
@@ -99,7 +100,6 @@ class QuordleTester:
             guess_history.append((guess, guess_result))
             answered_guesses.append(guess)
 
-
             for g in range(GAMES):
                 if guess == word[g]:
                     check_success[g] = True
@@ -109,7 +109,6 @@ class QuordleTester:
 
             if np.array_equal(check_success, [True, True, True, True]):
                 break
-
 
         return check_success, answered_guesses
 
