@@ -4,6 +4,7 @@ import requests
 import re
 """
 import string
+import os
 
 class WordList:
     """
@@ -14,6 +15,8 @@ class WordList:
 
     def __init__(self, filename):
         self.ascii_lowercase = list(string.ascii_lowercase)
+        if filename.startswith("data"):
+            filename = os.getcwd()[:-7] + filename
         with open(filename, encoding="utf8") as file:
             self.words = file.readlines()
             self.words = [word.rstrip() for word in self.words]

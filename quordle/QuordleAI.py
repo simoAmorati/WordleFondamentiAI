@@ -37,9 +37,9 @@ class QuordleAI:
             if len(possible_options[i]) == 1:
                 return possible_options[i][0]
 
-        #best_game = gameToEnd_LessPossibleOptions(guess_history)
+        best_game = gameToEnd_LessPossibleOptions(guess_history)
 
-        best_game = gameToEnd_KnowledgeStrategy(possible_options)
+        #best_game = gameToEnd_KnowledgeStrategy(possible_options, )
 
         w = 0
         best_worst_outcome = len(possible_options[best_game])
@@ -68,36 +68,42 @@ class QuordleAI:
 
 def remaining_options(words, guess_history):
     #   possible_options = [words, words, words, words]
-    possible_options = [[words] for _ in range(GAMES)]
+    possible_options = [[] for _ in range(GAMES)]
     present_letters = [set() for _ in range(GAMES)]  # list of present letters
     not_present_letters = [set() for _ in range(GAMES)]  # list of not present letters
     present_letter_position = [set() for _ in
                                range(GAMES)]  # list of list with present letter with already tried position
     correct_letter_position = [set() for _ in range(GAMES)]  # list of correct letters with correct position
 
+
     for element in guess_history:
-        for i in range(1, GAMES + 1):
-            for j in range(WORD_LENGTH):
-                if element[i][j] == LetterInformation.CORRECT:
-                    present_letters[i - 1].add(element[0][j])
-                    correct_letter_position[i - 1].add((element[0][j], j))
+        for i in range(0, len(element[1])):
+            if element[1][i]:
+                index_letter = 0
+                for letter in element[1][i]:
 
-                if element[i][j] == LetterInformation.PRESENT:
-                    present_letters[i - 1].add(element[0][j])
-                    present_letter_position[i - 1].add((element[0][j], j))
+                    if letter == LetterInformation.CORRECT:
+                        present_letters[i].add(element[0][index_letter])
+                        correct_letter_position[i].add((element[0][index_letter], index_letter))
 
-                if element[i][j] == LetterInformation.NOT_PRESENT:
-                    not_present_letters[i - 1].add(element[0][j])
+                    if letter == LetterInformation.PRESENT:
+                        present_letters[i].add(element[0][index_letter])
+                        present_letter_position[i].add((element[0][index_letter], index_letter))
+
+                    if letter == LetterInformation.NOT_PRESENT:
+                        not_present_letters[i].add(element[0][index_letter])
+
+                    index_letter += 1
 
     for i in range(GAMES):
         for l in present_letters[i]:
-            possible_options[i] = [word for word in possible_options[i] if l in word]
+            possible_options[i] = [w for w in words if l in w]
         for l in not_present_letters[i]:
-            possible_options[i] = [word for word in possible_options[i] if l not in word]
-        for el in correct_letter_position[i]:
-            possible_options[i] = [word for word in possible_options[i] if word[el[1]] == el[0]]
-        for el in present_letter_position[i]:
-            possible_options[i] = [word for word in possible_options[i] if word[el[1]] != el[0]]
+            possible_options[i] = [w for w in possible_options[i] if l not in w]
+        for l in correct_letter_position[i]:
+            possible_options[i] = [w for w in possible_options[i] if w[l[1]] == l[0]]
+        for l in present_letter_position[i]:
+            possible_options[i] = [w for w in possible_options[i] if w[l[1]] != l[0]]
 
     return possible_options
 
@@ -111,20 +117,21 @@ def calculate_outcome(guess, solution):
             outcome += 3 ** i
     return outcome  # outcome id (0-242)
 
-
-def gameToEnd_KnowledgeStrategy(guess_history):
+"""
+def gameToEnd_KnowledgeStrategy(possible_options):
     correct_letters = [0 for _ in range(GAMES)]
     present_letters = [0 for _ in range(GAMES)]
     not_present_letters = [0 for _ in range(GAMES)]
     knowledge = [0 for _ in range(GAMES)]
-    for i in guess_history:
-        for j in range(1, GAMES + 1):
+    for option in possible_options:
+        print(i)
+        for j in range(GAMES):
             for letter in range(WORD_LENGTH):
-                if guess_history[i][j][letter] == LetterInformation.CORRECT:
+                if guess_history[i][1][j][letter] == LetterInformation.CORRECT:
                     correct_letters[i] += 1
-                if guess_history[i][j][letter] == LetterInformation.PRESENT:
+                if guess_history[i][1][j][letter] == LetterInformation.PRESENT:
                     present_letters[i] += 1
-                if guess_history[i][j][letter] == LetterInformation.NOT_PRESENT:
+                if guess_history[i][1][j][letter] == LetterInformation.NOT_PRESENT:
                     not_present_letters[i] += 1
 
     for i in range(GAMES):
@@ -132,8 +139,13 @@ def gameToEnd_KnowledgeStrategy(guess_history):
                        not_present_letters[i]
 
     return knowledge.index(max(knowledge))
-
+"""
 
 def gameToEnd_LessPossibleOptions(possible_options):
-    max_list = max(possible_options, key=lambda i: len(i))
-    return possible_options.index(max_list)
+    min = 999999999999
+    cont = -1
+    for option in possible_options:
+        if len(option) < min and len(option) != 0:
+            min = len(option)
+            cont = possible_options.index(option)
+    return cont
