@@ -10,6 +10,7 @@ MAX_GUESSES = 9
 WORD_LENGTH = 5
 GAMES = 4
 
+
 class QuordleTester:
 
     def __init__(self, wordlist_filename="data/combined_wordlist.txt"):
@@ -99,7 +100,6 @@ class QuordleTester:
             guess_history.append((guess, guess_result))
             answered_guesses.append(guess)
 
-
             for g in range(GAMES):
                 if guess == word[g]:
                     check_success[g] = True
@@ -125,7 +125,7 @@ def main():
     np.set_printoptions(suppress=True)
 
     competition = QuordleTester(wordlist_filename="data/combined_wordlist.txt")
-    competition.fight(rounds=100, solution_wordlist_filename="data/shuffled_real_wordles.txt")
+    competition.fight(rounds=1000, solution_wordlist_filename="data/shuffled_real_wordles.txt")
 
 
 if __name__ == "__main__":

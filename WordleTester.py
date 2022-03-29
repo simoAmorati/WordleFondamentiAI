@@ -23,7 +23,7 @@ class WordleTester:
         guesses = []
         points = 0
         points_per_round = []
-        mistakes=[]
+        mistakes = []
 
         fight_words = WordList(solution_wordlist_filename).get_list_copy()
         start = time.time()
