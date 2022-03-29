@@ -22,7 +22,7 @@ class QuordleAI:
      information for each game in the quordle board"""
 
     def guess(self, guess_history):
-        attempts = ["prong", "charm", "skyed", "built"]
+        attempts = ["prone", "clain", "study"]
         num_attempts = len(guess_history)
         if num_attempts == 0:  # precalculated more efficient with if than for cycle
             return attempts[0]
@@ -30,8 +30,6 @@ class QuordleAI:
             return attempts[1]
         if num_attempts == 2:  # precalculated
             return attempts[2]
-        if num_attempts == 3:  # precalculated
-            return attempts[3]
 
         possible_options = remaining_options(self.words, guess_history)
 
@@ -39,12 +37,7 @@ class QuordleAI:
             if len(possible_options[i]) == 1:
                 return possible_options[i][0]
 
-        best_game = -1
-        if num_attempts == 4:
-            best_game = gameToEnd_KnowledgeStrategy(guess_history)
-        else:
-            best_game = gameToEnd_LessPossibleOptions(possible_options)
-
+        best_game = gameToEnd_LessPossibleOptions(possible_options)
 
         best_worst_outcome = len(possible_options[best_game])
         best_word = self.words[0]
@@ -111,11 +104,8 @@ def remaining_options(words, guess_history):
                 possible_options[i] = [w for w in possible_options[i] if w[l[1]] == l[0]]
             for l in present_letter_position[i]:
                 possible_options[i] = [w for w in possible_options[i] if w[l[1]] != l[0]]
-        #else:
-        #    possible_options[i].append([])
 
     return possible_options
-
 
 def calculate_outcome(guess, solution):
     outcome = 0
@@ -126,7 +116,7 @@ def calculate_outcome(guess, solution):
             outcome += 3 ** i
     return outcome  # outcome id (0-242)
 
-"""shit"""
+"""KnowledgeStrategy"""
 def gameToEnd_KnowledgeStrategy(guess_history):
     correct_letters = [0 for _ in range(GAMES)]
     present_letters = [0 for _ in range(GAMES)]
@@ -147,7 +137,6 @@ def gameToEnd_KnowledgeStrategy(guess_history):
         knowledge[i] = BONUS_CORRECT * correct_letters[i] + BONUS_PRESENT * present_letters[i] + BONUS_NOT_PRESENT * not_present_letters[i]
 
     return knowledge.index(max(knowledge))
-
 
 def gameToEnd_LessPossibleOptions(possible_options):
     min = 999999999999
