@@ -22,7 +22,7 @@ class QuordleAI:
      information for each game in the quordle board"""
 
     def guess(self, guess_history):
-        attempts = ["prone", "clain", "study"]
+        attempts = ["prone", "claim", "study"]
         num_attempts = len(guess_history)
         if num_attempts == 0:  # precalculated more efficient with if than for cycle
             return attempts[0]
