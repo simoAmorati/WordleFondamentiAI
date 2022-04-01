@@ -15,8 +15,9 @@ class WordList:
 
     def __init__(self, filename):
         self.ascii_lowercase = list(string.ascii_lowercase)
-        if filename.startswith("data"):
+        if "data" in filename:
             filename = os.getcwd()[:-7] + filename
+            filename = "C:\\Users\\sofia\\IdeaProjects\\WordleFondamentiAI\\data\\combined_wordlist.txt"
         with open(filename, encoding="utf8") as file:
             self.words = file.readlines()
             self.words = [word.rstrip() for word in self.words]
