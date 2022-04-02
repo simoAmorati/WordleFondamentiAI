@@ -15,7 +15,7 @@ BACKGROUND = '#fafafa'
 class GUIWordle(Frame):
     def __init__(self, master):
         super().__init__(master)
-        self.wordlist_filename = "\\data\\combined_wordlist.txt"
+        self.wordlist_filename = "data/combined_wordlist.txt"
         self.wordlist = WordList(self.wordlist_filename)
         self.words = self.wordlist.get_list_copy()
         self.competitor = WordleAISofia(self.words)
@@ -44,7 +44,7 @@ class GUIWordle(Frame):
         self.frame_control.grid_propagate(0)
         self.frame_control.grid(column=0, row=2, sticky='snew')
 
-        Label(self.frame_title, fg='black', text='Wordle', font=('Arial', 25, 'bold')).pack(side='top')
+        Label(self.frame_title, bg=BACKGROUND, fg='black', text='Wordle', font=('Arial', 25, 'bold')).pack(side='top')
         self.play_game()
 
 
@@ -95,9 +95,9 @@ class GUIWordle(Frame):
 if __name__ == "__main__":
     window = Tk()
     window.config(bg=BACKGROUND)
-    window.call('wm', 'iconphoto', window._w, PhotoImage(file='C:\\Users\\sofia\\IdeaProjects\\WordleFondamentiAI\\images\\Wordle_NYT_logo.svg.png'))
+    window.call('wm', 'iconphoto', window._w, PhotoImage(file='images/logo.png'))
     window.geometry('410x440+500+50')
     window.resizable(0, 0)
-    window.title('Wordle')
+    window.title('Wordle-Quordle-Octordle')
     app = GUIWordle(window)
     app.mainloop()

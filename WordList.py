@@ -1,3 +1,4 @@
+from sys import platform
 from typing import List
 """
 import requests
@@ -15,9 +16,16 @@ class WordList:
 
     def __init__(self, filename):
         self.ascii_lowercase = list(string.ascii_lowercase)
-        if "data" in filename:
+        self_filename = ""
+        if platform == "win32" or platform == "Windows":
+            filename_list = filename.split("/")
+            for i in filename_list:
+                self_filename = self_filename + "\\" + i
+            print(self_filename)
+        if filename.startswith("data") and "octordle" in os.getcwd():
+            filename = os.getcwd()[:-8] + filename
+        elif filename.startswith("data") and "quordle" in os.getcwd():
             filename = os.getcwd()[:-7] + filename
-            filename = "C:\\Users\\sofia\\IdeaProjects\\WordleFondamentiAI\\data\\combined_wordlist.txt"
         with open(filename, encoding="utf8") as file:
             self.words = file.readlines()
             self.words = [word.rstrip() for word in self.words]
