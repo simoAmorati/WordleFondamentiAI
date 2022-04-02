@@ -1,6 +1,8 @@
 import random
 import time
 
+from numpy.random import shuffle
+
 from WordList import *
 from OctordleAI import *
 from LetterPositionInformation import LetterInformation
@@ -33,6 +35,8 @@ class OctordleTester:
 
         for r in range(rounds):
             word = [random.choice(fight_words) for _ in range(GAMES)]
+            #word = ['slime', 'inept', 'lurid', 'curvy', 'racer', 'ninja', 'dream', 'extol']
+            #shuffle(word)
             current_time = time.time() - start
             round_words.append(word)
 
@@ -44,7 +48,7 @@ class OctordleTester:
             guesses.append(round_guesses)
             points_per_round.append(round_points)
 
-            if np.array_equal(success, [True, True, True, True]):
+            if np.array_equal(success, [True, True, True, True, True, True, True, True]):
                 success_total += 1
             else:
                 index_list = []

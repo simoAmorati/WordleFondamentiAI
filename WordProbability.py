@@ -17,7 +17,7 @@ class WordProbability:
         if word not in self.common_words:
             return 368 / (368 + 8890)
         relative_position = self.common_words.index(word) / len(self.common_words)
-        return 0.85 * (1 - relative_position) + 0.35 * relative_position
+        return 0.95 * (1 - relative_position) + 0.25 * relative_position
 
     def is_wordle_probability(self, word):
         """

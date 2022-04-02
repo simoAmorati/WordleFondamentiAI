@@ -125,7 +125,7 @@ def main():
     np.set_printoptions(suppress=True)
 
     competition = QuordleTester(wordlist_filename="data/combined_wordlist.txt")
-    competition.fight(rounds=100, solution_wordlist_filename="data/shuffled_real_wordles.txt")
+    competition.fight(rounds=10, solution_wordlist_filename="data/shuffled_real_wordles.txt")
 
 
 if __name__ == "__main__":
