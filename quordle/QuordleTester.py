@@ -1,9 +1,9 @@
 import random
 import time
 
-from WordList import *
+from utility.WordList import *
 from QuordleAI import *
-from LetterPositionInformation import LetterInformation
+from utility.LetterPositionInformation import LetterInformation
 import numpy as np
 
 MAX_GUESSES = 9

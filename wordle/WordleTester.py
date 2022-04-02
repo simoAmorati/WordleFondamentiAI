@@ -1,9 +1,9 @@
 import random
 import time
 
-from WordList import *
+from utility.WordList import *
 from WordleAI import *
-from LetterPositionInformation import *
+from utility.LetterPositionInformation import *
 
 MAX_GUESSES = 6
 WORD_LENGTH = 5

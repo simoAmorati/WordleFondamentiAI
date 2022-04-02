@@ -1,4 +1,4 @@
-from WordList import WordList
+from utility.WordList import WordList
 
 
 class WordProbability:
