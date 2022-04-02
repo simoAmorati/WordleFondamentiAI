@@ -1,22 +1,24 @@
 import random
 import time
 
+from numpy.random import shuffle
+
 from WordList import *
-from QuordleAI import *
+from OctordleAI import *
 from LetterPositionInformation import LetterInformation
 import numpy as np
 
-MAX_GUESSES = 9
+MAX_GUESSES = 13
 WORD_LENGTH = 5
-GAMES = 4
+GAMES = 8
 
 
-class QuordleTester:
+class OctordleTester:
 
     def __init__(self, wordlist_filename="data/combined_wordlist.txt"):
         self.wordlist = WordList(wordlist_filename)
         self.words = self.wordlist.get_list_copy()
-        self.competitor = QuordleAI(self.words)
+        self.competitor = OctordleAI(self.words)
 
     def fight(self, rounds, solution_wordlist_filename="data/shuffled_real_wordles.txt"):
         print("Start tournament")
@@ -33,6 +35,8 @@ class QuordleTester:
 
         for r in range(rounds):
             word = [random.choice(fight_words) for _ in range(GAMES)]
+            #word = ['slime', 'inept', 'lurid', 'curvy', 'racer', 'ninja', 'dream', 'extol']
+            #shuffle(word)
             current_time = time.time() - start
             round_words.append(word)
 
@@ -44,13 +48,13 @@ class QuordleTester:
             guesses.append(round_guesses)
             points_per_round.append(round_points)
 
-            if np.array_equal(success, [True, True, True, True]):
+            if np.array_equal(success, [True, True, True, True, True, True, True, True]):
                 success_total += 1
             else:
                 index_list = []
                 cont = 0
                 for value in success:
-                    if not value:
+                    if value == False:
                         index_list.append(cont)
                     cont += 1
                 for index in index_list:
@@ -75,9 +79,9 @@ class QuordleTester:
     def play(self, competitor, word):
         answered_guesses = []
         guess_history = []
-        check_success = [False, False, False, False]
+        check_success = [False, False, False, False, False, False, False, False]
 
-        for i in range(MAX_GUESSES):  # Up to 9 guesses
+        for i in range(MAX_GUESSES):  # Up to 13 guesses
             guess = competitor.guess(guess_history)
 
             if not self.guess_is_legal(guess):
@@ -107,7 +111,7 @@ class QuordleTester:
                     guess_result[g] = []
                     guess_history.append((guess, guess_result))
 
-            if np.array_equal(check_success, [True, True, True, True]):
+            if np.array_equal(check_success, [True, True, True, True, True, True, True, True]):
                 break
 
         return check_success, answered_guesses
@@ -123,8 +127,8 @@ def main():
     np.set_printoptions(threshold=np.inf)
     np.set_printoptions(suppress=True)
 
-    competition = QuordleTester(wordlist_filename="data/combined_wordlist.txt")
-    competition.fight(rounds=10, solution_wordlist_filename="data/shuffled_real_wordles.txt")
+    competition = OctordleTester(wordlist_filename="data/combined_wordlist.txt")
+    competition.fight(rounds=100, solution_wordlist_filename="data/shuffled_real_wordles.txt")
 
 
 if __name__ == "__main__":
