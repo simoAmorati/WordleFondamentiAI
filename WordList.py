@@ -16,7 +16,7 @@ class WordList:
 
     def __init__(self, filename):
         self.ascii_lowercase = list(string.ascii_lowercase)
-        if platform == "win32" or platform == "Windows":
+        if platform == "win32" or platform == "Windows" or "Win" in platform or "win" in platform:
             filename = filename.replace("/", "\\")
 
         if filename.startswith("data") and "octordle" in os.getcwd():
