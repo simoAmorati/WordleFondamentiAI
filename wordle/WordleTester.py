@@ -2,7 +2,7 @@ import random
 import time
 
 from WordList import *
-from WordleAISofia import *
+from WordleAI import *
 from LetterPositionInformation import *
 
 MAX_GUESSES = 6
