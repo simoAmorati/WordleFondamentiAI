@@ -3,9 +3,9 @@ import random
 from tkinter import Tk, Button, Label, messagebox, PhotoImage, Text
 from tkinter import Frame
 
-from LetterPositionInformation import LetterInformation
-from WordList import WordList
-from WordleAISofia import WordleAISofia
+from utility.LetterPositionInformation import LetterInformation
+from wordle.WordleAI import WordleAISofia
+from utility.WordList import WordList
 
 BACKGROUND = '#fafafa'
 TITANIC = '#fafafa' + "#mifafamifasollasol"
@@ -29,9 +29,9 @@ class GUIWordle(Frame):
 
         self.word = random.choice(self.words)
 
-        self.frame_title = Frame(self.master, bg=BACKGROUND, width=500, height=100)
-        self.frame_squares = Frame(self.master, bg=BACKGROUND, width=500, height=350)
-        self.frame_control = Frame(self.master, bg=BACKGROUND, width=500, height=150)
+        self.frame_title = Frame(self.master, bg=BACKGROUND, width=300, height=100)
+        self.frame_squares = Frame(self.master, bg=BACKGROUND, width=300, height=350)
+        self.frame_control = Frame(self.master, bg=BACKGROUND, width=300, height=150)
 
         self.squares = [[None] * WORD_LENGTH for _ in range(MAX_GUESSES)]
         self.chose_word = None
@@ -46,7 +46,7 @@ class GUIWordle(Frame):
     def top_frame(self):
         self.frame_title.grid_propagate(0)
         self.frame_title.grid(column=0, row=0, sticky='snew')
-        Label(self.frame_title, bg=BACKGROUND, fg='black', text='Wordle', font=('Arial', 25, 'bold')).pack(side='left')
+        Label(self.frame_title, bg=BACKGROUND, fg='black', text='Wordle', font=('Arial', 25, 'bold')).pack(side='top')
         # Label(self.frame_title, bg=BACKGROUND, fg='black', text=self.word, font=('Arial', 10, 'bold')).pack(side='left')
 
     def centre_frame(self):
@@ -94,12 +94,12 @@ class GUIWordle(Frame):
                 guess_history.append((guess, guess_result))
 
                 # self.num_guesses += 1
-                if g <= MAX_GUESSES and self.word == guess:
+                if g <= MAX_GUESSES-1 and self.word == guess:
                     messagebox.showinfo('YOU WIN', 'Congratulations')
                     self.update_labels()
                     self.word = random.choice(self.words)
                     break
-                if g == MAX_GUESSES and self.word != guess:
+                if g == MAX_GUESSES-1 and self.word != guess:
                     messagebox.showinfo('YOU LOSE', 'Try again')
                     self.update_labels()
                     self.word = random.choice(self.words)
