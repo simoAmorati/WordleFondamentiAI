@@ -23,6 +23,8 @@ class WordList:
             filename = os.getcwd()[:-8] + filename
         elif filename.startswith("data") and "quordle" in os.getcwd():
             filename = os.getcwd()[:-7] + filename
+        elif filename.startswith("data") and "wordle" in os.getcwd():
+            filename = os.getcwd()[:-6] + filename
         with open(filename, encoding="utf8") as file:
             self.words = file.readlines()
             self.words = [word.rstrip() for word in self.words]

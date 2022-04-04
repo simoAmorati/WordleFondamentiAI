@@ -1,7 +1,7 @@
 import numpy as np
 
-from LetterPositionInformation import LetterInformation
-from WordProbability import WordProbability
+from utility.LetterPositionInformation import LetterInformation
+from utility.WordProbability import WordProbability
 
 WORD_LENGTH = 5
 GAMES = 8

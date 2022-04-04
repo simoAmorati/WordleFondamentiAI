@@ -1,7 +1,7 @@
 import numpy as np
 
-from LetterPositionInformation import LetterInformation
-from WordProbability import WordProbability
+from utility.LetterPositionInformation import LetterInformation
+from utility.WordProbability import WordProbability
 
 WORD_LENGTH = 5
 GAMES = 4
@@ -55,7 +55,8 @@ class QuordleAI:
             worst_outcome = np.max(outcomes)
             if worst_outcome < best_worst_outcome or (worst_outcome == best_worst_outcome and (
                     best_word not in possible_options[best_game] or self.word_probability.is_wordle_probability(
-                word) > self.word_probability.is_wordle_probability(best_word)) and word in possible_options[best_game]):
+                word) > self.word_probability.is_wordle_probability(best_word)) and word in possible_options[
+                                                          best_game]):
                 best_worst_outcome = worst_outcome
                 best_word = word
 
@@ -71,7 +72,7 @@ def remaining_options(words, guess_history):
                                range(GAMES)]  # list of list with present letter with already tried position
     correct_letter_position = [set() for _ in range(GAMES)]  # list of correct letters with correct position
 
-    finish_game = {i:False for i in range(GAMES)}
+    finish_game = {i: False for i in range(GAMES)}
     for element in guess_history:
         for i in range(0, len(element[1])):
             if element[1][i]:
@@ -93,9 +94,8 @@ def remaining_options(words, guess_history):
             else:
                 finish_game[i] = True
 
-
     for i in range(GAMES):
-        if finish_game[i] != True:
+        if not finish_game[i]:
             for l in present_letters[i]:
                 possible_options[i] = [w for w in words if l in w]
             for l in not_present_letters[i]:
@@ -107,6 +107,7 @@ def remaining_options(words, guess_history):
 
     return possible_options
 
+
 def calculate_outcome(guess, solution):
     outcome = 0
     for i in range(5):
@@ -116,7 +117,10 @@ def calculate_outcome(guess, solution):
             outcome += 3 ** i
     return outcome  # outcome id (0-242)
 
+
 """KnowledgeStrategy"""
+
+
 def gameToEnd_KnowledgeStrategy(guess_history):
     correct_letters = [0 for _ in range(GAMES)]
     present_letters = [0 for _ in range(GAMES)]
@@ -134,15 +138,17 @@ def gameToEnd_KnowledgeStrategy(guess_history):
                         not_present_letters[j] += 1
 
     for i in range(GAMES):
-        knowledge[i] = BONUS_CORRECT * correct_letters[i] + BONUS_PRESENT * present_letters[i] + BONUS_NOT_PRESENT * not_present_letters[i]
+        knowledge[i] = BONUS_CORRECT * correct_letters[i] + BONUS_PRESENT * present_letters[i] + BONUS_NOT_PRESENT * \
+                       not_present_letters[i]
 
     return knowledge.index(max(knowledge))
 
+
 def gameToEnd_LessPossibleOptions(possible_options):
-    min = 999999999999
+    minimum = 999999999999
     cont = -1
     for option in possible_options:
-        if len(option) < min and len(option) != 0:
-            min = len(option)
+        if len(option) < minimum and len(option) != 0:
+            minimum = len(option)
             cont = possible_options.index(option)
     return cont

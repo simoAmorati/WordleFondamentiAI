@@ -1,9 +1,9 @@
 import random
 import time
 
-from WordList import *
+from utility.WordList import *
 from QuordleAI import *
-from LetterPositionInformation import LetterInformation
+from utility.LetterPositionInformation import LetterInformation
 import numpy as np
 
 MAX_GUESSES = 9
@@ -50,7 +50,7 @@ class QuordleTester:
                 index_list = []
                 cont = 0
                 for value in success:
-                    if value == False:
+                    if not value:
                         index_list.append(cont)
                     cont += 1
                 for index in index_list:
@@ -109,7 +109,6 @@ class QuordleTester:
 
             if np.array_equal(check_success, [True, True, True, True]):
                 break
-
 
         return check_success, answered_guesses
 
