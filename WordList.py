@@ -1,4 +1,3 @@
-from sys import platform
 from typing import List
 """
 import requests
@@ -6,6 +5,7 @@ import re
 """
 import string
 import os
+from sys import platform
 
 class WordList:
     """
@@ -16,12 +16,9 @@ class WordList:
 
     def __init__(self, filename):
         self.ascii_lowercase = list(string.ascii_lowercase)
-        self_filename = ""
-        if platform == "win32" or platform == "Windows":
-            filename_list = filename.split("/")
-            for i in filename_list:
-                self_filename = self_filename + "\\" + i
-            print(self_filename)
+        if platform == "win32" or platform == "Windows" or "Win" in platform or "win" in platform:
+            filename = filename.replace("/", "\\")
+
         if filename.startswith("data") and "octordle" in os.getcwd():
             filename = os.getcwd()[:-8] + filename
         elif filename.startswith("data") and "quordle" in os.getcwd():

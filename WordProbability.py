@@ -7,9 +7,9 @@ class WordProbability:
     """
 
     def __init__(self):
-        self.common_words = WordList("data/common_words.txt").words
+        self.common_words = WordList("C:\\Users\\sofia\\IdeaProjects\\WordleFondamentiAI\\data\\common_words.txt").words
         self.probability = {}
-        self.words = WordList("data/combined_wordlist.txt").words
+        self.words = WordList("C:\\Users\\sofia\\IdeaProjects\\WordleFondamentiAI\\data\\combined_wordlist.txt").words
         for word in self.words:
             self.probability[word] = self._calculate_probability(word)
 
@@ -17,7 +17,7 @@ class WordProbability:
         if word not in self.common_words:
             return 368 / (368 + 8890)
         relative_position = self.common_words.index(word) / len(self.common_words)
-        return 0.85 * (1 - relative_position) + 0.35 * relative_position
+        return 0.95 * (1 - relative_position) + 0.25 * relative_position
 
     def is_wordle_probability(self, word):
         """
