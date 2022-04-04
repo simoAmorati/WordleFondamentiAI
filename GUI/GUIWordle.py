@@ -125,7 +125,7 @@ class GUIWordle(Frame):
 if __name__ == "__main__":
     window = Tk()
     window.config(bg=BACKGROUND)
-    #window.call('wm', 'iconphoto', window._w, PhotoImage(file="images/logo.png"))
+    window.call('wm', 'iconphoto', window._w, PhotoImage(file="images/logo.png"))
     window.geometry('300x500')
     window.resizable(0, 0)
     window.title('Wordle')
