@@ -73,6 +73,7 @@ def remaining_options(words, guess_history):
     correct_letter_position = [set() for _ in range(GAMES)]  # list of correct letters with correct position
 
     finish_game = {i: False for i in range(GAMES)}
+
     for element in guess_history:
         for i in range(0, len(element[1])):
             if element[1][i]:
@@ -105,7 +106,26 @@ def remaining_options(words, guess_history):
             for l in present_letter_position[i]:
                 possible_options[i] = [w for w in possible_options[i] if w[l[1]] != l[0]]
 
-    return possible_options
+    rem_option = possible_options
+
+    for gm in range(GAMES):
+        for w in possible_options[gm]:
+            remove_p = False
+            remove_np = False
+            if len(present_letters[gm]) == WORD_LENGTH:
+                for let in present_letters[gm]:
+                    if w.count(let) != 1 and remove_p is False:
+                        rem_option[gm].remove(w)
+                        remove_p = True
+                    """if let not in w and remove_p is False:
+                        rem_option[gm].remove(w)
+                        remove_p = True"""
+            for let in not_present_letters[gm]:
+                if let in w and remove_np is False:
+                    rem_option[gm].remove(w)
+                    remove_np = True
+
+    return rem_option
 
 
 def calculate_outcome(guess, solution):

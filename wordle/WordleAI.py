@@ -80,6 +80,24 @@ def remaining_options(words, guess_history):
     for el in present_letter_position:
         possible_options = [word for word in possible_options if word[el[1]] != el[0]]
 
+    rem_option = possible_options
+
+    for w in possible_options:
+        remove_p = False
+        remove_np = False
+        if len(present_letters) == WORD_LENGTH:
+            for let in present_letters:
+                if w.count(let) != 1 and remove_p is False:
+                    rem_option.remove(w)
+                    remove_p = True
+                """if let not in w and remove_p is False:
+                    rem_option[gm].remove(w)
+                    remove_p = True"""
+        for let in not_present_letters:
+            if let in w and remove_np is False:
+                rem_option.remove(w)
+                remove_np = True
+
     return possible_options
 
 

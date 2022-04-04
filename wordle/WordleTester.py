@@ -23,7 +23,7 @@ class WordleTester:
         guesses = []
         points = 0
         points_per_round = []
-        mistakes=[]
+        mistakes = []
 
         fight_words = WordList(solution_wordlist_filename).get_list_copy()
         start = time.time()
@@ -105,7 +105,7 @@ def main():
     np.set_printoptions(suppress=True)
 
     competition = WordleTester(wordlist_filename="data/combined_wordlist.txt")
-    competition.fight(rounds=1000, solution_wordlist_filename="data/shuffled_real_wordles.txt")
+    competition.fight(rounds=10000, solution_wordlist_filename="data/shuffled_real_wordles.txt")
 
 
 if __name__ == "__main__":
