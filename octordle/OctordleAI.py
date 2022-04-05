@@ -1,17 +1,15 @@
 import numpy as np
 
-from utility.LetterPositionInformation import LetterInformation
 from utility.WordProbability import WordProbability
+from utility.StrategyGameToEnd import gameToEnd_KnowledgeStrategy, gameToEnd_LessPossibleOptions
+from utility.RemainingOptions import remaining_options
+from utility.OutcomeMinMax import calculate_outcome
 
 WORD_LENGTH = 5
 GAMES = 8
-BONUS_CORRECT = 5
-BONUS_PRESENT = 3
-BONUS_NOT_PRESENT = 1
 
 
 class OctordleAI:
-    """words is a list of all wordle possible words"""
 
     def __init__(self, words):
         self.words = words
@@ -31,7 +29,7 @@ class OctordleAI:
         if num_attempts == 2:  # precalculated
             return attempts[2]
 
-        possible_options = remaining_options(self.words, guess_history)
+        possible_options = remaining_options(self.words, guess_history, GAMES)
 
         for i in range(GAMES):
             if len(possible_options[i]) == 1:
@@ -63,110 +61,7 @@ class OctordleAI:
         return best_word
 
 
-def remaining_options(words, guess_history):
-    #   possible_options = [words, words, words, words]
-    possible_options = [[] for _ in range(GAMES)]
-    present_letters = [set() for _ in range(GAMES)]  # list of present letters
-    not_present_letters = [set() for _ in range(GAMES)]  # list of not present letters
-    present_letter_position = [set() for _ in
-                               range(GAMES)]  # list of list with present letter with already tried position
-    correct_letter_position = [set() for _ in range(GAMES)]  # list of correct letters with correct position
-
-    finish_game = {i: False for i in range(GAMES)}
-    for element in guess_history:
-        for i in range(0, len(element[1])):
-            if element[1][i]:
-                index_letter = 0
-                for letter in element[1][i]:
-
-                    if letter == LetterInformation.CORRECT:
-                        present_letters[i].add(element[0][index_letter])
-                        correct_letter_position[i].add((element[0][index_letter], index_letter))
-
-                    if letter == LetterInformation.PRESENT:
-                        present_letters[i].add(element[0][index_letter])
-                        present_letter_position[i].add((element[0][index_letter], index_letter))
-
-                    if letter == LetterInformation.NOT_PRESENT:
-                        not_present_letters[i].add(element[0][index_letter])
-
-                    index_letter += 1
-            else:
-                finish_game[i] = True
-
-    for i in range(GAMES):
-        if not finish_game[i]:
-            for l in present_letters[i]:
-                possible_options[i] = [w for w in words if l in w]
-            for l in not_present_letters[i]:
-                possible_options[i] = [w for w in possible_options[i] if l not in w]
-            for l in correct_letter_position[i]:
-                possible_options[i] = [w for w in possible_options[i] if w[l[1]] == l[0]]
-            for l in present_letter_position[i]:
-                possible_options[i] = [w for w in possible_options[i] if w[l[1]] != l[0]]
-
-    rem_option = possible_options
-
-    for gm in range(GAMES):
-        for w in possible_options[gm]:
-            remove_p = False
-            remove_np = False
-            if len(present_letters[gm]) == WORD_LENGTH:
-                for let in present_letters[gm]:
-                    if w.count(let) != 1 and remove_p is False:
-                        rem_option[gm].remove(w)
-                        remove_p = True
-                    """if let not in w and remove_p is False:
-                        rem_option[gm].remove(w)
-                        remove_p = True"""
-            for let in not_present_letters[gm]:
-                if let in w and remove_np is False:
-                    rem_option[gm].remove(w)
-                    remove_np = True
-    return rem_option
 
 
-def calculate_outcome(guess, solution):
-    outcome = 0
-    for i in range(5):
-        if guess[i] == solution[i]:
-            outcome += 2 * 3 ** i
-        elif guess[i] not in solution:
-            outcome += 3 ** i
-    return outcome  # outcome id (0-242)
 
 
-"""KnowledgeStrategy"""
-
-
-def gameToEnd_KnowledgeStrategy(guess_history):
-    correct_letters = [0 for _ in range(GAMES)]
-    present_letters = [0 for _ in range(GAMES)]
-    not_present_letters = [0 for _ in range(GAMES)]
-    knowledge = [0 for _ in range(GAMES)]
-    for guess in guess_history:
-        for j in range(GAMES):
-            if guess[1][j]:
-                for letter in range(WORD_LENGTH):
-                    if guess[1][j][letter] == LetterInformation.CORRECT:
-                        correct_letters[j] += 1
-                    if guess[1][j][letter] == LetterInformation.PRESENT:
-                        present_letters[j] += 1
-                    if guess[1][j][letter] == LetterInformation.NOT_PRESENT:
-                        not_present_letters[j] += 1
-
-    for i in range(GAMES):
-        knowledge[i] = BONUS_CORRECT * correct_letters[i] + BONUS_PRESENT * present_letters[i] + BONUS_NOT_PRESENT * \
-                       not_present_letters[i]
-
-    return knowledge.index(max(knowledge))
-
-
-def gameToEnd_LessPossibleOptions(possible_options):
-    minimum = 999999999999
-    cont = -1
-    for option in possible_options:
-        if len(option) < minimum and len(option) != 0:
-            minimum = len(option)
-            cont = possible_options.index(option)
-    return cont

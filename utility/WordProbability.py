@@ -7,7 +7,7 @@ class WordProbability:
     """
 
     def __init__(self):
-        self.common_words = WordList("C:\\Users\\sofia\\IdeaProjects\\WordleFondamentiAI\\data\\common_words.txt").words
+        self.common_words = WordList("C:\\Users\\sofia\\IdeaProjects\\WordleFondamentiAI\\data\\shuffled_real_wordles.txt").words
         self.probability = {}
         self.words = WordList("C:\\Users\\sofia\\IdeaProjects\\WordleFondamentiAI\\data\\combined_wordlist.txt").words
         for word in self.words:

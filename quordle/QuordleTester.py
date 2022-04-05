@@ -18,7 +18,7 @@ class QuordleTester:
         self.words = self.wordlist.get_list_copy()
         self.competitor = QuordleAI(self.words)
 
-    def fight(self, rounds, solution_wordlist_filename="data/shuffled_real_wordles.txt"):
+    def fight(self, rounds, solution_wordlist_filename="data/shuffled_real_wordles.txt"): # "data/combined_wordlist.txt"
         print("Start tournament")
         round_words = []
         success_total = 0
@@ -125,7 +125,7 @@ def main():
 
     competition = QuordleTester(wordlist_filename="data/combined_wordlist.txt")
     competition.fight(rounds=100, solution_wordlist_filename="data/shuffled_real_wordles.txt")
-
+    # competition.fight(rounds=100, solution_wordlist_filename="data/combined_wordlist.txt")
 
 if __name__ == "__main__":
     main()

@@ -33,12 +33,11 @@ class GUIQuordle(Frame):
 
         self.word = [random.choice(self.words) for _ in range(GAMES)]
 
-        self.frame_title = Frame(self.master, bg=BACKGROUND, width=800, height=100)
-        self.frame_squares = Frame(self.master, bg=BACKGROUND, width=800, height=400)
-        self.frame_control = Frame(self.master, bg=BACKGROUND, width=800, height=50)
+        self.frame_title = Frame(self.master, bg=BACKGROUND, width=900, height=100)
+        self.frame_squares = Frame(self.master, bg=BACKGROUND, width=900, height=400)
+        self.frame_control = Frame(self.master, bg=BACKGROUND, width=900, height=50)
 
         self.squares = [[None] * MAX for _ in range(MAX_GUESSES)]
-        """self.chose_words = [None for _ in range(GAMES)]"""
         self.create_widgets()
 
     def create_widgets(self):
@@ -50,9 +49,7 @@ class GUIQuordle(Frame):
         self.frame_title.grid_propagate(0)
         self.frame_title.grid(column=0, row=0, sticky='snew')
         Label(self.frame_title, bg=BACKGROUND, fg='black', text='Quordle', font=('Arial', 25, 'bold')).pack(side='top')
-        """Label(self.frame_title, bg=BACKGROUND, fg='black',
-              text=self.word[0] + "\t" + self.word[1] + "\t" + self.word[2] + "\t" + self.word[3],
-              font=('Arial', 10, 'bold')).pack(side='left')"""
+
 
     def centre_frame(self):
 
@@ -61,9 +58,13 @@ class GUIQuordle(Frame):
 
         for i in range(MAX_GUESSES):
             for j in range(MAX):
+
                 self.squares[i][j] = Label(self.frame_squares, width=2, height=1, fg='white', bg=BACKGROUND, text="",
                                            font=('Arial', 15, 'bold'), borderwidth=2, relief="groove")
-                self.squares[i][j].grid(row=i, column=j, padx=5, pady=5)
+                if (j+1) % WORD_LENGTH == 0:
+                    self.squares[i][j].grid(row=i, column=j, padx=(5, 20), pady=5)
+                else:
+                    self.squares[i][j].grid(row=i, column=j, padx=5, pady=5)
 
     def bottom_frame(self):
         self.frame_control.grid_propagate(0)
@@ -71,16 +72,8 @@ class GUIQuordle(Frame):
 
         play_quordle_button = Button(self.frame_control, bg=Green, fg='white', text="Play Quordle", font=('Arial', 10),
                                     command=lambda: self.play_quordle_game())
-        play_quordle_button.grid(row=0, column=0, padx=5, pady=5)
+        play_quordle_button.pack(side='bottom')
 
-        """for i in range(GAMES):
-            self.chose_words[i] = Text(self.frame_control, height=1, width=10, bg=BACKGROUND, fg='black', font=('Arial', 10),
-                                    borderwidth=2, relief="groove")
-            self.chose_words[i].grid(row=i + 1, column=0, padx=5, pady=10)
-
-        chose_word_button = Button(self.frame_control, text="Choose word to guess", font=('Arial', 10),
-                                   command=lambda: self.choose_word())
-        chose_word_button.grid(row=1, column=1, padx=5, pady=10)"""
 
     def play_quordle_game(self):
         guess_history = []
@@ -153,7 +146,7 @@ if __name__ == "__main__":
     window.config(bg=BACKGROUND)
     window.call('wm', 'iconphoto', window._w,
                 PhotoImage(file="C:\\Users\\sofia\\IdeaProjects\\WordleFondamentiAI\\images\\logo.png"))
-    window.geometry('800x500')
+    window.geometry('900x500')
     window.resizable(0, 0)
     window.title('Quordle')
     app = GUIQuordle(window)

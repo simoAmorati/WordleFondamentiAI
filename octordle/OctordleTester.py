@@ -18,7 +18,7 @@ class OctordleTester:
         self.words = self.wordlist.get_list_copy()
         self.competitor = OctordleAI(self.words)
 
-    def fight(self, rounds, solution_wordlist_filename="data/shuffled_real_wordles.txt"):
+    def fight(self, rounds, solution_wordlist_filename="data/shuffled_real_wordles.txt"): # "data/combined_wordlist.txt"
         print("Start tournament")
         round_words = []
         success_total = 0
@@ -33,8 +33,6 @@ class OctordleTester:
 
         for r in range(rounds):
             word = [random.choice(fight_words) for _ in range(GAMES)]
-            #word = ['slime', 'inept', 'lurid', 'curvy', 'racer', 'ninja', 'dream', 'extol']
-            #shuffle(word)
             current_time = time.time() - start
             round_words.append(word)
 
@@ -127,7 +125,7 @@ def main():
 
     competition = OctordleTester(wordlist_filename="data/combined_wordlist.txt")
     competition.fight(rounds=100, solution_wordlist_filename="data/shuffled_real_wordles.txt")
-
+    # competition.fight(rounds=100, solution_wordlist_filename="data/combined_wordlist.txt")
 
 if __name__ == "__main__":
     main()

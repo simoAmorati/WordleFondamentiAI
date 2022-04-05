@@ -33,9 +33,9 @@ class GUIOctordle(Frame):
 
         self.word = [random.choice(self.words) for _ in range(GAMES)]
 
-        self.frame_title = Frame(self.master, bg=BACKGROUND, width=1200, height=100)
-        self.frame_squares = Frame(self.master, bg=BACKGROUND, width=1500, height=500)
-        self.frame_control = Frame(self.master, bg=BACKGROUND, width=1200, height=100)
+        self.frame_title = Frame(self.master, bg=BACKGROUND, width=1600, height=100)
+        self.frame_squares = Frame(self.master, bg=BACKGROUND, width=1600, height=500)
+        self.frame_control = Frame(self.master, bg=BACKGROUND, width=1600, height=100)
 
         self.squares = [[None] * MAX for _ in range(MAX_GUESSES)]
         #self.chose_words = [None for _ in range(GAMES)]
@@ -63,7 +63,10 @@ class GUIOctordle(Frame):
             for j in range(MAX):
                 self.squares[i][j] = Label(self.frame_squares, width=2, height=1, fg='white', bg=BACKGROUND, text="",
                                            font=('Arial', 12, 'bold'), borderwidth=2, relief="groove")
-                self.squares[i][j].grid(row=i, column=j, padx=5, pady=5)
+                if (j+1) % WORD_LENGTH == 0:
+                    self.squares[i][j].grid(row=i, column=j, padx=(5, 20), pady=5)
+                else:
+                    self.squares[i][j].grid(row=i, column=j, padx=5, pady=5)
 
     def bottom_frame(self):
         self.frame_control.grid_propagate(0)
@@ -71,7 +74,7 @@ class GUIOctordle(Frame):
 
         play_octordle_button = Button(self.frame_control, bg=Green, fg='white', text="Play Octordle", font=('Arial', 10),
                                     command=lambda: self.play_octordle_game())
-        play_octordle_button.grid(row=0, column=0, padx=5, pady=5)
+        play_octordle_button.pack(side='bottom')
 
         """for i in range(GAMES):
             self.chose_words[i] = Text(self.frame_control, height=1, width=10, bg=BACKGROUND, fg='black', font=('Arial', 10),
@@ -153,7 +156,7 @@ if __name__ == "__main__":
     window.config(bg=BACKGROUND)
     window.call('wm', 'iconphoto', window._w,
                 PhotoImage(file="C:\\Users\\sofia\\IdeaProjects\\WordleFondamentiAI\\images\\logo.png"))
-    window.geometry('1500x600')
+    window.geometry('1600x600')
     window.resizable(0, 0)
     window.title('Octordle')
     app = GUIOctordle(window)
