@@ -44,6 +44,7 @@ class QuordleAI:
         best_word = self.words[0]
         outcomes = np.empty(243, dtype=float)
 
+
         for i in range(len(self.words)):
             word = self.words[i]
             outcomes.fill(0)
@@ -61,11 +62,6 @@ class QuordleAI:
                 best_worst_outcome = worst_outcome
                 best_word = word
 
-        # print(best_word)
-        return best_word
-
-
-
-
+         return best_word
 
 

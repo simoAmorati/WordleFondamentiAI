@@ -33,33 +33,21 @@ class WordleAISofia:
         best_worst_outcome = len(possible_options)
         best_word = self.words[0]
         outcomes = np.empty(243, dtype=float)
-        if num_attempts != MAX_GUESSES-1:
-            for i in range(len(self.words)):
-                word = self.words[i]
-                outcomes.fill(0)
-                for option in possible_options:
-                    outcome_id = calculate_outcome(word, option)
-                    outcomes[outcome_id] += self.word_probability.is_wordle_probability(option)
-                    if outcomes[outcome_id] > best_worst_outcome:
-                        break
-                outcomes[242] = 0  # don't punish for finding a solution
-                worst_outcome = np.max(outcomes)
-                if worst_outcome < best_worst_outcome or (worst_outcome == best_worst_outcome and (
-                        best_word not in possible_options or self.word_probability.is_wordle_probability(word) > self.word_probability.is_wordle_probability(best_word)) and word in possible_options):
-                    best_worst_outcome = worst_outcome
-                    best_word = word
-                w += 1
-        else:
-            best_word = self.calc_prob(possible_options)
+
+        for i in range(len(self.words)):
+            word = self.words[i]
+            outcomes.fill(0)
+            for option in possible_options:
+                outcome_id = calculate_outcome(word, option)
+                outcomes[outcome_id] += self.word_probability.is_wordle_probability(option)
+                if outcomes[outcome_id] > best_worst_outcome:
+                    break
+            outcomes[242] = 0  # don't punish for finding a solution
+            worst_outcome = np.max(outcomes)
+            if worst_outcome < best_worst_outcome or (worst_outcome == best_worst_outcome and (
+                    best_word not in possible_options or self.word_probability.is_wordle_probability(word) > self.word_probability.is_wordle_probability(best_word)) and word in possible_options):
+                best_worst_outcome = worst_outcome
+                best_word = word
+            w += 1
 
         return best_word
-
-
-    def calc_prob(self, possible_words):
-        max_prob_word = ""
-        max_prob = 0
-        for word in possible_words:
-            if self.word_probability.is_wordle_probability(word) > max_prob:
-                max_prob_word = word
-
-        return max_prob_word

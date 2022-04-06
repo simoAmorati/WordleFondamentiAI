@@ -16,7 +16,7 @@ class WordleTester:
         self.words = self.wordlist.get_list_copy()
         self.competitor = WordleAISofia(self.words)
 
-    def fight(self, rounds, solution_wordlist_filename="data/shuffled_real_wordles.txt", print_details=False):
+    def fight(self, rounds, solution_wordlist_filename="data/combined_wordlist.txt", print_details=False):
         print("Start tournament")
         round_words = []
         success_total = 0
@@ -105,7 +105,7 @@ def main():
     np.set_printoptions(suppress=True)
 
     competition = WordleTester(wordlist_filename="data/combined_wordlist.txt")
-    competition.fight(rounds=1000, solution_wordlist_filename="data/shuffled_real_wordles.txt")
+    competition.fight(rounds=1000, solution_wordlist_filename="data/combined_wordlist.txt")
 
 
 if __name__ == "__main__":
