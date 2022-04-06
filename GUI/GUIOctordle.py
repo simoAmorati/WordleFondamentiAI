@@ -38,7 +38,7 @@ class GUIOctordle(Frame):
         self.frame_control = Frame(self.master, bg=BACKGROUND, width=1600, height=100)
 
         self.squares = [[None] * MAX for _ in range(MAX_GUESSES)]
-        #self.chose_words = [None for _ in range(GAMES)]
+        # self.chose_words = [None for _ in range(GAMES)]
         self.create_widgets()
 
     def create_widgets(self):
@@ -63,7 +63,7 @@ class GUIOctordle(Frame):
             for j in range(MAX):
                 self.squares[i][j] = Label(self.frame_squares, width=2, height=1, fg='white', bg=BACKGROUND, text="",
                                            font=('Arial', 12, 'bold'), borderwidth=2, relief="groove")
-                if (j+1) % WORD_LENGTH == 0:
+                if (j + 1) % WORD_LENGTH == 0:
                     self.squares[i][j].grid(row=i, column=j, padx=(5, 20), pady=5)
                 else:
                     self.squares[i][j].grid(row=i, column=j, padx=5, pady=5)
@@ -72,8 +72,9 @@ class GUIOctordle(Frame):
         self.frame_control.grid_propagate(0)
         self.frame_control.grid(column=0, row=2, sticky='snew')
 
-        play_octordle_button = Button(self.frame_control, bg=Green, fg='white', text="Play Octordle", font=('Arial', 10),
-                                    command=lambda: self.play_octordle_game())
+        play_octordle_button = Button(self.frame_control, bg=Green, fg='white', text="Play Octordle",
+                                      font=('Arial', 10),
+                                      command=lambda: self.play_octordle_game())
         play_octordle_button.pack(side='bottom')
 
         """for i in range(GAMES):
@@ -108,7 +109,8 @@ class GUIOctordle(Frame):
                             self.squares[gss][g * WORD_LENGTH + letter]['bg'] = Yellow
                             game_result[letter] = LetterInformation.PRESENT
                         if check_success[g] is True:
-                            self.squares[gss][g * WORD_LENGTH + letter].config(bg=BACKGROUND, text="", borderwidth=2, relief="groove")
+                            self.squares[gss][g * WORD_LENGTH + letter].config(bg=BACKGROUND, text="", borderwidth=2,
+                                                                               relief="groove")
                     guess_result.insert(g, game_result)
                 guess_history.append((guess, guess_result))
 
@@ -119,14 +121,18 @@ class GUIOctordle(Frame):
                         guess_result[g] = []
                         guess_history.append((guess, guess_result))
 
-
-            if gss <= MAX_GUESSES-1 and np.array_equal(check_success, [True, True, True, True, True, True, True, True]):
+            if gss <= MAX_GUESSES - 1 and np.array_equal(check_success,
+                                                         [True, True, True, True, True, True, True, True]):
                 messagebox.showinfo('YOU WIN', 'Congratulations')
                 self.update_labels()
                 self.word = [random.choice(self.words) for _ in range(GAMES)]
                 break
-            if gss == MAX_GUESSES-1 and not (np.array_equal(check_success, [True, True, True, True, True, True, True, True])):
-                messagebox.showinfo('YOU LOSE', 'Try again\nwords were:\n'+self.word[0]+" "+self.word[1]+" "+self.word[2]+" "+self.word[3]+" "+self.word[4]+" "+self.word[5]+" "+self.word[6]+" "+self.word[7]+" ")
+            if gss == MAX_GUESSES - 1 and not (
+            np.array_equal(check_success, [True, True, True, True, True, True, True, True])):
+                messagebox.showinfo('YOU LOSE',
+                                    'Try again\nwords were:\n' + self.word[0] + " " + self.word[1] + " " + self.word[
+                                        2] + " " + self.word[3] + " " + self.word[4] + " " + self.word[5] + " " +
+                                    self.word[6] + " " + self.word[7] + " ")
                 self.update_labels()
                 self.word = [random.choice(self.words) for _ in range(GAMES)]
                 break
@@ -150,6 +156,7 @@ class GUIOctordle(Frame):
             if len(self.word) != WORD_LENGTH:
                 self.word[i] = random.choice(self.words)
     """
+
 
 if __name__ == "__main__":
     window = Tk()
