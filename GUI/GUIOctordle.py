@@ -26,7 +26,7 @@ class GUIOctordle(Frame):
     def __init__(self, master):
         super().__init__(master)
 
-        self.wordlist_filename = "C:\\Users\\sofia\\IdeaProjects\\WordleFondamentiAI\\data\\combined_wordlist.txt"
+        self.wordlist_filename = "data/shuffled_real_wordles.txt"
         self.wordlist = WordList(self.wordlist_filename)
         self.words = self.wordlist.get_list_copy()
         self.competitor = OctordleAI(self.words)
@@ -162,7 +162,7 @@ if __name__ == "__main__":
     window = Tk()
     window.config(bg=BACKGROUND)
     window.call('wm', 'iconphoto', window._w,
-                PhotoImage(file="C:\\Users\\sofia\\IdeaProjects\\WordleFondamentiAI\\images\\logo.png"))
+                PhotoImage(file="images/logo.png"))
     window.geometry('1600x600')
     window.resizable(0, 0)
     window.title('Octordle')
