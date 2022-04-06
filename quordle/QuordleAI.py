@@ -62,6 +62,6 @@ class QuordleAI:
                 best_worst_outcome = worst_outcome
                 best_word = word
 
-         return best_word
+        return best_word
 
 

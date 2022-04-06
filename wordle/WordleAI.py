@@ -28,7 +28,6 @@ class WordleAISofia:
         if len(possible_options) == 1:
             return possible_options[0]
 
-
         w = 0
         best_worst_outcome = len(possible_options)
         best_word = self.words[0]
@@ -49,5 +48,4 @@ class WordleAISofia:
                 best_worst_outcome = worst_outcome
                 best_word = word
             w += 1
-
         return best_word
