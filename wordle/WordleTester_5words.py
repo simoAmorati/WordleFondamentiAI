@@ -9,7 +9,7 @@ MAX_GUESSES = 6
 WORD_LENGTH = 5
 
 
-class WordleTester:
+class WordleTester_5words:
 
     def __init__(self, wordlist_filename="data/combined_wordlist.txt"):
         self.wordlist = WordList(wordlist_filename)
@@ -59,7 +59,7 @@ class WordleTester:
         print("Points per round: ", points)
         print("Average of guesses per round: ", result)
         print("Success rate: ", success_rate)
-
+        print("Time per round: ", competitor_time/rounds)
         print("")
         print("Competition finished with ", rounds, " rounds \n")
 
@@ -104,9 +104,9 @@ def main():
     np.set_printoptions(threshold=np.inf)
     np.set_printoptions(suppress=True)
 
-    competition = WordleTester(wordlist_filename="data/combined_wordlist.txt")
-    competition.fight(rounds=1000, solution_wordlist_filename="data/combined_wordlist.txt")
-
+    competition = WordleTester_5words(wordlist_filename="data/combined_wordlist.txt")
+    # competition.fight(rounds=10000, solution_wordlist_filename="data/combined_wordlist.txt")
+    competition.fight(rounds=10000, solution_wordlist_filename="data/shuffled_real_wordles.txt")
 
 if __name__ == "__main__":
     main()

@@ -6,14 +6,14 @@ WORD_LENGTH = 5
 MAX_GUESSES = 6
 
 class WordleAI:
-    """words is a list of all wordle possible words"""
 
     def __init__(self, words):
+        # words is a list of all wordle possible words
         self.words = words
-        self.indexed_words = {key: value for value, key in enumerate(self.words)}
         self.word_probability = WordProbability()
 
     def guess(self, guess_history):
+
         attempts = ['study', 'claim', 'prone']
         num_attempts = len(guess_history)
         if num_attempts == 0:  # precalculated

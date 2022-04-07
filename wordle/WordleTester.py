@@ -16,7 +16,7 @@ class WordleTester:
         self.words = self.wordlist.get_list_copy()
         self.competitor = WordleAI(self.words)
 
-    def fight(self, rounds, solution_wordlist_filename="data/combined_wordlist.txt", print_details=False):
+    def fight(self, rounds, solution_wordlist_filename="data/combined_wordlist.txt"):
         print("Start tournament")
         round_words = []
         success_total = 0
@@ -59,6 +59,7 @@ class WordleTester:
         print("Points per round: ", points)
         print("Average of guesses per round: ", result)
         print("Success rate: ", success_rate)
+        print("Time per round: ", competitor_time/rounds)
 
         print("")
         print("Competition finished with ", rounds, " rounds \n")
@@ -105,8 +106,8 @@ def main():
     np.set_printoptions(suppress=True)
 
     competition = WordleTester(wordlist_filename="data/combined_wordlist.txt")
-    competition.fight(rounds=1000, solution_wordlist_filename="data/combined_wordlist.txt")
-
+    #competition.fight(rounds=1000, solution_wordlist_filename="data/combined_wordlist.txt")
+    competition.fight(rounds=1000, solution_wordlist_filename="data/shuffled_real_wordles.txt")
 
 if __name__ == "__main__":
     main()

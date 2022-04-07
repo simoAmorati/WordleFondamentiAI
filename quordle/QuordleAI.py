@@ -9,11 +9,10 @@ GAMES = 4
 
 
 class QuordleAI:
-    """words is a list of all wordle possible words"""
 
     def __init__(self, words):
+        # words is a list of all wordle possible words
         self.words = words
-        self.indexed_words = {key: value for value, key in enumerate(self.words)}
         self.word_probability = WordProbability()
 
     """guess  history in the quordle case has a different structure each element of the list has four sublist with the
@@ -43,7 +42,6 @@ class QuordleAI:
         best_worst_outcome = len(possible_options[best_game])
         best_word = self.words[0]
         outcomes = np.empty(243, dtype=float)
-
 
         for i in range(len(self.words)):
             word = self.words[i]

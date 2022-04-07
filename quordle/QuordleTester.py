@@ -68,6 +68,7 @@ class QuordleTester:
         print("Points per round: ", points)
         print("Average of guesses per round: ", result)
         print("Success rate: ", success_rate)
+        print("Time per round: ", competitor_time/rounds)
 
         print("")
         print("Competition finished with ", rounds, " rounds \n")
@@ -124,8 +125,8 @@ def main():
     np.set_printoptions(suppress=True)
 
     competition = QuordleTester(wordlist_filename="data/combined_wordlist.txt")
-    # competition.fight(rounds=100, solution_wordlist_filename="data/shuffled_real_wordles.txt")
-    competition.fight(rounds=100, solution_wordlist_filename="data/combined_wordlist.txt")
+    competition.fight(rounds=100, solution_wordlist_filename="data/shuffled_real_wordles.txt")
+    #competition.fight(rounds=100, solution_wordlist_filename="data/combined_wordlist.txt")
 
 if __name__ == "__main__":
     main()
