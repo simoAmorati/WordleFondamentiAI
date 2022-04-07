@@ -48,7 +48,7 @@ class GUIQuordle(Frame):
     def top_frame(self):
         self.frame_title.grid_propagate(0)
         self.frame_title.grid(column=0, row=0, sticky='snew')
-        Label(self.frame_title, bg=BACKGROUND, fg='black', text='Quordle', font=('Arial', 25, 'bold')).pack(side='top')
+        Label(self.frame_title, bg=BACKGROUND, fg='black', text='Quordle', font=('Cooper Black', 25, 'bold')).pack(side='top')
 
 
     def centre_frame(self):

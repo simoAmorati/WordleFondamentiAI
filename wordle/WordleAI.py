@@ -3,17 +3,17 @@ from utility.WordProbability import WordProbability
 from utility.RemainingOptions import remaining_options_wordle
 from utility.OutcomeMinMax import calculate_outcome
 WORD_LENGTH = 5
-MAX_GUESSES=6
+MAX_GUESSES = 6
 
-class WordleAISofia:
-    """words is a list of all wordle possible words"""
+class WordleAI:
 
     def __init__(self, words):
+        # words is a list of all wordle possible words
         self.words = words
-        self.indexed_words = {key: value for value, key in enumerate(self.words)}
         self.word_probability = WordProbability()
 
     def guess(self, guess_history):
+
         attempts = ['study', 'claim', 'prone']
         num_attempts = len(guess_history)
         if num_attempts == 0:  # precalculated

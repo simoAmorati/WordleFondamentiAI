@@ -13,13 +13,13 @@ class OctordleAI:
 
     def __init__(self, words):
         self.words = words
-        self.indexed_words = {key: value for value, key in enumerate(self.words)}
         self.word_probability = WordProbability()
 
-    """guess  history in the quordle case has a different structure each element of the list has four sublist with the
-     information for each game in the quordle board"""
+    """guess  history in the octordle case has a different structure each element of the list has eight sublist with the
+     information for each game in the octordle board"""
 
     def guess(self, guess_history):
+
         attempts = ["prone", "claim", "study"]
         num_attempts = len(guess_history)
         if num_attempts == 0:  # precalculated more efficient with if than for cycle
