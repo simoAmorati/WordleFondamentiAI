@@ -4,7 +4,7 @@ from tkinter import Tk, Button, Label, messagebox, PhotoImage, Text
 from tkinter import Frame
 
 from utility.LetterPositionInformation import LetterInformation
-from wordle.WordleAI import WordleAISofia
+from wordle.WordleAI import WordleAI
 from utility.WordList import WordList
 
 BACKGROUND = '#fafafa'
@@ -25,7 +25,7 @@ class GUIWordle(Frame):
         self.wordlist_filename = "data/shuffled_real_wordles.txt"
         self.wordlist = WordList(self.wordlist_filename)
         self.words = self.wordlist.get_list_copy()
-        self.competitor = WordleAISofia(self.words)
+        self.competitor = WordleAI(self.words)
 
         self.word = random.choice(self.words)
 
@@ -46,7 +46,7 @@ class GUIWordle(Frame):
     def top_frame(self):
         self.frame_title.grid_propagate(0)
         self.frame_title.grid(column=0, row=0, sticky='snew')
-        Label(self.frame_title, bg=BACKGROUND, fg='black', text='Wordle', font=('Arial', 25, 'bold')).pack(side='top')
+        Label(self.frame_title, bg=BACKGROUND, fg='black', text='Wordle', font=('Cooper Black', 25, 'bold')).pack(side='top')
         # Label(self.frame_title, bg=BACKGROUND, fg='black', text=self.word, font=('Arial', 10, 'bold')).pack(side='left')
 
     def centre_frame(self):

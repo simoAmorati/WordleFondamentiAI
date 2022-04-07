@@ -49,7 +49,7 @@ class GUIOctordle(Frame):
     def top_frame(self):
         self.frame_title.grid_propagate(0)
         self.frame_title.grid(column=0, row=0, sticky='snew')
-        Label(self.frame_title, bg=BACKGROUND, fg='black', text='Octordle', font=('Arial', 25, 'bold')).pack(side='top')
+        Label(self.frame_title, bg=BACKGROUND, fg='black', text='Octordle', font=('Cooper Black', 25, 'bold')).pack(side='top')
         """Label(self.frame_title, bg=BACKGROUND, fg='black',
               text=self.word[0] + "\t" + self.word[1] + "\t" + self.word[2] + "\t" + self.word[3],
               font=('Arial', 10, 'bold')).pack(side='left')"""
