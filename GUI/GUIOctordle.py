@@ -26,19 +26,19 @@ class GUIOctordle(Frame):
     def __init__(self, master):
         super().__init__(master)
 
-        self.wordlist_filename = "data/combined_wordlist.txt"
+        self.wordlist_filename = "data/shuffled_real_wordles.txt"
         self.wordlist = WordList(self.wordlist_filename)
         self.words = self.wordlist.get_list_copy()
         self.competitor = OctordleAI(self.words)
 
         self.word = [random.choice(self.words) for _ in range(GAMES)]
 
-        self.frame_title = Frame(self.master, bg=BACKGROUND, width=1200, height=100)
-        self.frame_squares = Frame(self.master, bg=BACKGROUND, width=1500, height=500)
-        self.frame_control = Frame(self.master, bg=BACKGROUND, width=1200, height=100)
+        self.frame_title = Frame(self.master, bg=BACKGROUND, width=1600, height=100)
+        self.frame_squares = Frame(self.master, bg=BACKGROUND, width=1600, height=500)
+        self.frame_control = Frame(self.master, bg=BACKGROUND, width=1600, height=100)
 
         self.squares = [[None] * MAX for _ in range(MAX_GUESSES)]
-        #self.chose_words = [None for _ in range(GAMES)]
+        # self.chose_words = [None for _ in range(GAMES)]
         self.create_widgets()
 
     def create_widgets(self):
@@ -63,15 +63,19 @@ class GUIOctordle(Frame):
             for j in range(MAX):
                 self.squares[i][j] = Label(self.frame_squares, width=2, height=1, fg='white', bg=BACKGROUND, text="",
                                            font=('Arial', 12, 'bold'), borderwidth=2, relief="groove")
-                self.squares[i][j].grid(row=i, column=j, padx=5, pady=5)
+                if (j + 1) % WORD_LENGTH == 0:
+                    self.squares[i][j].grid(row=i, column=j, padx=(5, 20), pady=5)
+                else:
+                    self.squares[i][j].grid(row=i, column=j, padx=5, pady=5)
 
     def bottom_frame(self):
         self.frame_control.grid_propagate(0)
         self.frame_control.grid(column=0, row=2, sticky='snew')
 
-        play_octordle_button = Button(self.frame_control, bg=Green, fg='white', text="Play Octordle", font=('Arial', 10),
-                                    command=lambda: self.play_octordle_game())
-        play_octordle_button.grid(row=0, column=0, padx=5, pady=5)
+        play_octordle_button = Button(self.frame_control, bg=Green, fg='white', text="Play Octordle",
+                                      font=('Arial', 10),
+                                      command=lambda: self.play_octordle_game())
+        play_octordle_button.pack(side='bottom')
 
         """for i in range(GAMES):
             self.chose_words[i] = Text(self.frame_control, height=1, width=10, bg=BACKGROUND, fg='black', font=('Arial', 10),
@@ -105,7 +109,8 @@ class GUIOctordle(Frame):
                             self.squares[gss][g * WORD_LENGTH + letter]['bg'] = Yellow
                             game_result[letter] = LetterInformation.PRESENT
                         if check_success[g] is True:
-                            self.squares[gss][g * WORD_LENGTH + letter].config(bg=BACKGROUND, text="", borderwidth=2, relief="groove")
+                            self.squares[gss][g * WORD_LENGTH + letter].config(bg=BACKGROUND, text="", borderwidth=2,
+                                                                               relief="groove")
                     guess_result.insert(g, game_result)
                 guess_history.append((guess, guess_result))
 
@@ -116,14 +121,18 @@ class GUIOctordle(Frame):
                         guess_result[g] = []
                         guess_history.append((guess, guess_result))
 
-
-            if gss <= MAX_GUESSES-1 and np.array_equal(check_success, [True, True, True, True, True, True, True, True]):
+            if gss <= MAX_GUESSES - 1 and np.array_equal(check_success,
+                                                         [True, True, True, True, True, True, True, True]):
                 messagebox.showinfo('YOU WIN', 'Congratulations')
                 self.update_labels()
                 self.word = [random.choice(self.words) for _ in range(GAMES)]
                 break
-            if gss == MAX_GUESSES-1 and not (np.array_equal(check_success, [True, True, True, True, True, True, True, True])):
-                messagebox.showinfo('YOU LOSE', 'Try again\nwords were:\n'+self.word[0]+" "+self.word[1]+" "+self.word[2]+" "+self.word[3]+" "+self.word[4]+" "+self.word[5]+" "+self.word[6]+" "+self.word[7]+" ")
+            if gss == MAX_GUESSES - 1 and not (
+            np.array_equal(check_success, [True, True, True, True, True, True, True, True])):
+                messagebox.showinfo('YOU LOSE',
+                                    'Try again\nwords were:\n' + self.word[0] + " " + self.word[1] + " " + self.word[
+                                        2] + " " + self.word[3] + " " + self.word[4] + " " + self.word[5] + " " +
+                                    self.word[6] + " " + self.word[7] + " ")
                 self.update_labels()
                 self.word = [random.choice(self.words) for _ in range(GAMES)]
                 break
@@ -151,8 +160,9 @@ class GUIOctordle(Frame):
 if __name__ == "__main__":
     window = Tk()
     window.config(bg=BACKGROUND)
-    window.call('wm', 'iconphoto', window._w, PhotoImage(file="images/logo.png"))
-    window.geometry('1500x600')
+    window.call('wm', 'iconphoto', window._w,
+                PhotoImage(file="images/logo.png"))
+    window.geometry('1600x600')
     window.resizable(0, 0)
     window.title('Octordle')
     app = GUIOctordle(window)

@@ -1,5 +1,5 @@
 from utility.WordList import WordList
-
+MIN = 0.025
 
 class WordProbability:
     """
@@ -15,7 +15,7 @@ class WordProbability:
 
     def _calculate_probability(self, word):
         if word not in self.common_words:
-            return 368 / (368 + 8890)
+            return MIN
         relative_position = self.common_words.index(word) / len(self.common_words)
         return 0.95 * (1 - relative_position) + 0.25 * relative_position
 

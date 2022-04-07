@@ -2,7 +2,7 @@ import random
 import time
 
 from utility.WordList import *
-from quordle.QuordleAI import *
+from QuordleAI import *
 from utility.LetterPositionInformation import LetterInformation
 import numpy as np
 

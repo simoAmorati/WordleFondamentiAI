@@ -1,9 +1,8 @@
-import os
 import random
 import time
 
 from utility.WordList import *
-from octordle.OctordleAI import *
+from OctordleAI import *
 from utility.LetterPositionInformation import LetterInformation
 import numpy as np
 
