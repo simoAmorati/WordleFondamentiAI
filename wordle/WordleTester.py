@@ -2,7 +2,8 @@ import random
 import time
 
 from utility.WordList import *
-from WordleAI import *
+from wordle.WordleAI import *
+from wordle.WordleAI_lettersProbability import *
 from utility.LetterPositionInformation import *
 
 MAX_GUESSES = 6
@@ -14,7 +15,8 @@ class WordleTester:
     def __init__(self, wordlist_filename="data/combined_wordlist.txt"):
         self.wordlist = WordList(wordlist_filename)
         self.words = self.wordlist.get_list_copy()
-        self.competitor = WordleAISofia(self.words)
+        self.competitor = WordleAI(self.words)
+        #self.competitor = WordleAI_lettersProbability(self.words)
 
     def fight(self, rounds, solution_wordlist_filename="data/shuffled_real_wordles.txt", results_filename="results/WordleResults.txt", printOnFile=False):
         print("Start tournament")
@@ -114,7 +116,7 @@ def main():
     np.set_printoptions(suppress=True)
 
     competition = WordleTester(wordlist_filename="data/combined_wordlist.txt")
-    competition.fight(rounds=10, solution_wordlist_filename="data/shuffled_real_wordles.txt", printOnFile=True)
+    competition.fight(rounds=100, solution_wordlist_filename="data/shuffled_real_wordles.txt", printOnFile=False)
 
 
 if __name__ == "__main__":

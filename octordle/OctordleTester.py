@@ -2,7 +2,7 @@ import random
 import time
 
 from utility.WordList import *
-from OctordleAI import *
+from octordle.OctordleAI import *
 from utility.LetterPositionInformation import LetterInformation
 import numpy as np
 
