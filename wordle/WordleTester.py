@@ -2,7 +2,8 @@ import random
 import time
 
 from utility.WordList import *
-from WordleAI import *
+from wordle.WordleAI import *
+from wordle.WordleAI_lettersProbability import *
 from utility.LetterPositionInformation import *
 
 MAX_GUESSES = 6
@@ -14,10 +15,12 @@ class WordleTester:
     def __init__(self, wordlist_filename="data/combined_wordlist.txt"):
         self.wordlist = WordList(wordlist_filename)
         self.words = self.wordlist.get_list_copy()
-        self.competitor = WordleAISofia(self.words)
+        self.competitor = WordleAI(self.words)
+        #self.competitor = WordleAI_lettersProbability(self.words)
 
-    def fight(self, rounds, solution_wordlist_filename="data/shuffled_real_wordles.txt", print_details=False):
-        print("Start tournament")
+    def fight(self, rounds, solution_wordlist_filename="data/shuffled_real_wordles.txt", results_filename="results/WordleResults.txt", printOnFile=False):
+        print("Hybrid WordleAI\n"
+              "Start tournament")
         round_words = []
         success_total = 0
         guesses = []
@@ -63,6 +66,15 @@ class WordleTester:
         print("")
         print("Competition finished with ", rounds, " rounds \n")
 
+        if printOnFile:
+            #os.chdir("../")
+            with open(results_filename, 'a') as file:
+                file.write("on file " + solution_wordlist_filename.split("/")[1] + " with " + str(rounds) + " rounds (" + time.strftime("%d/%m/%Y") + ")\n")
+                file.write("Mistakes " + str(len(mistakes)) + "\n")
+                file.write("Success rate: " + str(success_rate) + "\n")
+                file.write("Average of guesses per round: " + str(result) + "\n")
+                file.write("------------------------------------\n")
+
     def play(self, competitor, word):
         answered_guesses = []
         success = False
@@ -105,7 +117,7 @@ def main():
     np.set_printoptions(suppress=True)
 
     competition = WordleTester(wordlist_filename="data/combined_wordlist.txt")
-    competition.fight(rounds=10000, solution_wordlist_filename="data/shuffled_real_wordles.txt")
+    competition.fight(rounds=10, solution_wordlist_filename="data/shuffled_real_wordles.txt", printOnFile=False)
 
 
 if __name__ == "__main__":

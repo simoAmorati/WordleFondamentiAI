@@ -4,7 +4,7 @@ from tkinter import Tk, Button, Label, messagebox, PhotoImage, Text
 from tkinter import Frame
 
 from utility.LetterPositionInformation import LetterInformation
-from wordle.WordleAI import WordleAISofia
+from wordle.WordleAI import WordleAI
 from utility.WordList import WordList
 
 BACKGROUND = '#fafafa'
@@ -22,10 +22,10 @@ class GUIWordle(Frame):
     def __init__(self, master):
         super().__init__(master)
 
-        self.wordlist_filename = "data/combined_wordlist.txt"
+        self.wordlist_filename = "data/shuffled_real_wordles.txt"
         self.wordlist = WordList(self.wordlist_filename)
         self.words = self.wordlist.get_list_copy()
-        self.competitor = WordleAISofia(self.words)
+        self.competitor = WordleAI(self.words)
 
         self.word = random.choice(self.words)
 
@@ -46,7 +46,7 @@ class GUIWordle(Frame):
     def top_frame(self):
         self.frame_title.grid_propagate(0)
         self.frame_title.grid(column=0, row=0, sticky='snew')
-        Label(self.frame_title, bg=BACKGROUND, fg='black', text='Wordle', font=('Arial', 25, 'bold')).pack(side='top')
+        Label(self.frame_title, bg=BACKGROUND, fg='black', text='Wordle', font=('Cooper Black', 25, 'bold')).pack(side='top')
         # Label(self.frame_title, bg=BACKGROUND, fg='black', text=self.word, font=('Arial', 10, 'bold')).pack(side='left')
 
     def centre_frame(self):
@@ -57,7 +57,10 @@ class GUIWordle(Frame):
             for j in range(WORD_LENGTH):
                 self.squares[i][j] = Label(self.frame_squares, width=2, height=1, fg='white', bg=BACKGROUND, text="",
                                            font=('Arial', 25, 'bold'), borderwidth=2, relief="groove")
-                self.squares[i][j].grid(row=i, column=j, padx=5, pady=5)
+                if j == 0 or (j != 0 and j % WORD_LENGTH == 0):
+                    self.squares[i][j].grid(row=i, column=j, padx=(12, 5), pady=5)
+                else:
+                    self.squares[i][j].grid(row=i, column=j, padx=5, pady=5)
 
     def bottom_frame(self):
         self.frame_control.grid_propagate(0)

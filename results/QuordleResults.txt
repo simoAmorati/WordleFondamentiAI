@@ -1,0 +1,10 @@
+on file shuffled_real_wordles.txt with 10000 rounds (07/04/2022)
+Mistakes 58
+Success rate: 99.43
+Average of guesses per round: 7.4812
+------------------------------------
+on file combined_wordlist.txt with 10000 rounds (07/04/2022)
+Mistakes 1800
+Success rate: 82.43
+Average of guesses per round: 8.2587
+------------------------------------

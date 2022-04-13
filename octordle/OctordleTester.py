@@ -2,7 +2,7 @@ import random
 import time
 
 from utility.WordList import *
-from OctordleAI import *
+from octordle.OctordleAI import *
 from utility.LetterPositionInformation import LetterInformation
 import numpy as np
 
@@ -18,8 +18,9 @@ class OctordleTester:
         self.words = self.wordlist.get_list_copy()
         self.competitor = OctordleAI(self.words)
 
-    def fight(self, rounds, solution_wordlist_filename="data/shuffled_real_wordles.txt"):
-        print("Start tournament")
+    def fight(self, rounds, solution_wordlist_filename="data/shuffled_real_wordles.txt", results_filename="results/OctordleResults.txt", printOnFile=False):
+        print("Hybrid OctordleAI\n"
+              "Start tournament")
         round_words = []
         success_total = 0
         guesses = []
@@ -74,6 +75,15 @@ class OctordleTester:
         print("")
         print("Competition finished with ", rounds, " rounds \n")
 
+        if printOnFile:
+            #os.chdir("../")
+            with open(results_filename, 'a') as file:
+                file.write("on file " + solution_wordlist_filename.split("/")[1] + " with " + str(rounds) + " rounds (" + time.strftime("%d/%m/%Y") + ")\n")
+                file.write("Mistakes " + str(len(mistakes)) + "\n")
+                file.write("Success rate: " + str(success_rate) + "\n")
+                file.write("Average of guesses per round: " + str(result) + "\n")
+                file.write("------------------------------------\n")
+
     def play(self, competitor, word):
         answered_guesses = []
         guess_history = []
@@ -126,7 +136,7 @@ def main():
     np.set_printoptions(suppress=True)
 
     competition = OctordleTester(wordlist_filename="data/combined_wordlist.txt")
-    competition.fight(rounds=100, solution_wordlist_filename="data/shuffled_real_wordles.txt")
+    competition.fight(rounds=10, solution_wordlist_filename="data/shuffled_real_wordles.txt", printOnFile=False)
 
 
 if __name__ == "__main__":
