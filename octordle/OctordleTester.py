@@ -19,7 +19,8 @@ class OctordleTester:
         self.competitor = OctordleAI(self.words)
 
     def fight(self, rounds, solution_wordlist_filename="data/shuffled_real_wordles.txt", results_filename="results/OctordleResults.txt", printOnFile=False):
-        print("Start tournament")
+        print("Hybrid OctordleAI\n"
+              "Start tournament")
         round_words = []
         success_total = 0
         guesses = []
@@ -135,7 +136,7 @@ def main():
     np.set_printoptions(suppress=True)
 
     competition = OctordleTester(wordlist_filename="data/combined_wordlist.txt")
-    competition.fight(rounds=1, solution_wordlist_filename="data/shuffled_real_wordles.txt", printOnFile=True)
+    competition.fight(rounds=10, solution_wordlist_filename="data/shuffled_real_wordles.txt", printOnFile=False)
 
 
 if __name__ == "__main__":

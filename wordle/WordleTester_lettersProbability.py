@@ -15,11 +15,11 @@ class WordleTester:
     def __init__(self, wordlist_filename="data/combined_wordlist.txt"):
         self.wordlist = WordList(wordlist_filename)
         self.words = self.wordlist.get_list_copy()
-        self.competitor = WordleAI(self.words)
-        #self.competitor = WordleAI_lettersProbability(self.words)
+        #self.competitor = WordleAI(self.words)
+        self.competitor = WordleAI_lettersProbability(self.words)
 
     def fight(self, rounds, solution_wordlist_filename="data/shuffled_real_wordles.txt", results_filename="results/WordleResults.txt", printOnFile=False):
-        print("Hybrid WordleAI\n"
+        print("WordleAI based on Letters Probability \n"
               "Start tournament")
         round_words = []
         success_total = 0
@@ -118,7 +118,7 @@ def main():
 
     competition = WordleTester(wordlist_filename="data/combined_wordlist.txt")
     competition.fight(rounds=10, solution_wordlist_filename="data/shuffled_real_wordles.txt", printOnFile=False)
-
+    # competition.fight(rounds=10, solution_wordlist_filename="data/combined_wordlist.txt", printOnFile=False)
 
 if __name__ == "__main__":
     main()

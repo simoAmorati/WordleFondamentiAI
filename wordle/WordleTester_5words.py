@@ -17,7 +17,8 @@ class WordleTester_5words:
         self.competitor = WordleAI_5words(self.words)
 
     def fight(self, rounds, solution_wordlist_filename="data/combined_wordlist.txt", print_details=False):
-        print("Start tournament")
+        print("WordleAI based on 5 pre-filled words\n"
+              "Start tournament")
         round_words = []
         success_total = 0
         guesses = []
@@ -106,7 +107,7 @@ def main():
 
     competition = WordleTester_5words(wordlist_filename="data/combined_wordlist.txt")
     # competition.fight(rounds=10000, solution_wordlist_filename="data/combined_wordlist.txt")
-    competition.fight(rounds=10000, solution_wordlist_filename="data/shuffled_real_wordles.txt")
+    competition.fight(rounds=10, solution_wordlist_filename="data/shuffled_real_wordles.txt")
 
 if __name__ == "__main__":
     main()

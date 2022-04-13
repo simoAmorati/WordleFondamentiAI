@@ -19,7 +19,8 @@ class QuordleTester:
         self.competitor = QuordleAI(self.words)
 
     def fight(self, rounds, solution_wordlist_filename="data/shuffled_real_wordles.txt", results_filename="results/QuordleResults.txt", printOnFile=False):
-        print("Start tournament")
+        print("Hybrid QuordleAI\n"
+              "Start tournament")
         round_words = []
         success_total = 0
         guesses = []
@@ -133,7 +134,7 @@ def main():
     np.set_printoptions(suppress=True)
 
     competition = QuordleTester(wordlist_filename="data/combined_wordlist.txt")
-    competition.fight(rounds=1, solution_wordlist_filename="data/shuffled_real_wordles.txt", printOnFile=True)
+    competition.fight(rounds=10, solution_wordlist_filename="data/shuffled_real_wordles.txt", printOnFile=False)
 
 
 if __name__ == "__main__":

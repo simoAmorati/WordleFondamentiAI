@@ -63,8 +63,8 @@ class GUIOctordle(Frame):
             for j in range(MAX):
                 self.squares[i][j] = Label(self.frame_squares, width=2, height=1, fg='white', bg=BACKGROUND, text="",
                                            font=('Arial', 12, 'bold'), borderwidth=2, relief="groove")
-                if (j + 1) % WORD_LENGTH == 0:
-                    self.squares[i][j].grid(row=i, column=j, padx=(5, 20), pady=5)
+                if j == 0 or (j != 0 and j % WORD_LENGTH == 0):
+                    self.squares[i][j].grid(row=i, column=j, padx=(20, 5), pady=5)
                 else:
                     self.squares[i][j].grid(row=i, column=j, padx=5, pady=5)
 
